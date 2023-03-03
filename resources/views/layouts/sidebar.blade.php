@@ -45,6 +45,12 @@
                     <span>Session</span>
                 </a>
             </li>
+            <li class="sidebar-item @active('messages')">
+                <a href="{{ route('messages.index') }}" class="sidebar-link">
+                    <i class="bi bi-chat-square-fill"></i>
+                    <span>Messages</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
