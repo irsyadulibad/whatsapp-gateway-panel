@@ -8,6 +8,10 @@
                 <form action="" method="post">
                     @csrf
                     <div class="mb-3">
+                        <label for="target">Target</label>
+                        <input type="number" name="target" id="target" class="form-control">
+                    </div>
+                    <div class="mb-3">
                         <label for="message">Message</label>
                         <textarea name="message" id="message" cols="30" rows="10" class="form-control @error('message') is-invalid @enderror" autofocus></textarea>
                         @error('message')

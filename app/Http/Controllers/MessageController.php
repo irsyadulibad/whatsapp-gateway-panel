@@ -22,7 +22,7 @@ class MessageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }
@@ -71,7 +71,7 @@ class MessageController extends Controller
         //
     }
 
-    public function compose($session)
+    public function compose()
     {
         return view('message.compose');
     }
@@ -80,6 +80,15 @@ class MessageController extends Controller
     {
         $request->validate([
             'message' => 'required',
+            'target' => 'required|numeric'
         ]);
+
+        $send = (new MessageRepository($session))->send([
+            'target' => $request->target,
+            'text' => $request->message,
+        ]);
+
+        if ($send) return redirect()->route('message.index')->with('Pesan berhasil dikirimkan');
+        return redirect()->back()->with('Pesan gagal dikirimkan');
     }
 }

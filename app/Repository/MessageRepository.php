@@ -18,7 +18,22 @@ class MessageRepository
     {
         $res = Http::get($this->url);
 
-        if ($res->status() == 200) return $res->object()?->data;
+        if ($res->status() == 200) {
+            $data = $res->object()?->data;
+
+            $data = array_map(function ($msg) {
+                if (!isset($msg->message)) return null;
+                if (!isset($msg->message->conversation)) return null;
+
+                return (object) [
+                    'number' => explode('@', $msg->remoteJid)[0],
+                    'text' => $msg->message->conversation,
+                ];
+            }, $data);
+
+            return array_filter($data, fn ($msg) => !is_null($msg));
+        };
+
         return [];
     }
 
@@ -31,5 +46,7 @@ class MessageRepository
                 'text' => $data['text']
             ]
         ]);
+
+        return $res->status() == 200;
     }
 }

@@ -23,6 +23,8 @@
                     @forelse ($messages as $message)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $message->text }}</td>
+                        <td>{{ $message->number }}</td>
                     </tr>
                     @empty
 
