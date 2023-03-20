@@ -36,7 +36,11 @@ class MessageController extends Controller
 
         if ($send) {
             return $this->success(
-                ['target' => $request->target],
+                [
+                    'target' => $request->target,
+                    'text' => $send,
+                    'session' => $session,
+                ],
                 "Success send the message"
             );
         }

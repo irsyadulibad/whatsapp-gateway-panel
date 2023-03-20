@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\Message;
 use Illuminate\Support\Facades\Http;
 
 class MessageRepository
@@ -47,6 +48,18 @@ class MessageRepository
             ]
         ]);
 
-        return $res->status() == 200;
+        if ($res->status() == 200) {
+            $text = $res->object()->message->extendedTextMessage->text;
+
+            Message::create([
+                'text' => $text,
+                'target' => $data['target'],
+                'session' => $this->session,
+            ]);
+
+            return $text;
+        }
+
+        return false;
     }
 }
