@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Whatsapp Gateway</title>
 
-    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/main/app.css">
-    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/css/shared/iconly.css">
+    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/compiled/css/app.css">
+    <link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/compiled/css/iconly.css">
 </head>
 <body>
 
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <script src="https://zuramai.github.io/mazer/demo/assets/js/bootstrap.js"></script>
-    <script src="https://zuramai.github.io/mazer/demo/assets/js/app.js"></script>
+    <script src="https://zuramai.github.io/mazer/demo/assets/compiled/js/app.js"></script>
+    {{-- <script src="https://zuramai.github.io/mazer/demo/assets/js/app.js"></script> --}}
 </body>
 </html>
