@@ -49,6 +49,7 @@
     </div>
 
     <script src="https://zuramai.github.io/mazer/demo/assets/compiled/js/app.js"></script>
+    @stack('script')
     {{-- <script src="https://zuramai.github.io/mazer/demo/assets/js/app.js"></script> --}}
 </body>
 </html>

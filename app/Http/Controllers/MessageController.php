@@ -8,14 +8,21 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    private MessageRepository $repo;
+
+    public function __construct()
+    {
+        $this->repo = new MessageRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         return view('message.index', [
-            'title' => 'Messages',
-            'sess' => (new SessionRepository)->get(),
+            'title' => 'Message List',
+            'messages' => $this->repo->get(),
         ]);
     }
 
@@ -24,7 +31,7 @@ class MessageController extends Controller
      */
     public function create(Request $request)
     {
-        //
+        return view('message.create');
     }
 
     /**
@@ -32,7 +39,18 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'message' => 'required',
+            'target' => 'required|numeric'
+        ]);
+
+        $send = $this->repo->send([
+            'target' => $request->target,
+            'text' => $request->message,
+        ]);
+
+        if ($send) return redirect()->route('messages.index')->with('Pesan berhasil dikirimkan');
+        return redirect()->back()->with('Pesan gagal dikirimkan');
     }
 
     /**
@@ -40,11 +58,7 @@ class MessageController extends Controller
      */
     public function show(string $ses)
     {
-        return view('message.show', [
-            'title' => 'Message List',
-            'messages' => (new MessageRepository($ses))->get(),
-            'session' => $ses,
-        ]);
+        //
     }
 
     /**
@@ -69,26 +83,5 @@ class MessageController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function compose()
-    {
-        return view('message.compose');
-    }
-
-    public function send(Request $request, $session)
-    {
-        $request->validate([
-            'message' => 'required',
-            'target' => 'required|numeric'
-        ]);
-
-        $send = (new MessageRepository($session))->send([
-            'target' => $request->target,
-            'text' => $request->message,
-        ]);
-
-        if ($send) return redirect()->route('message.index')->with('Pesan berhasil dikirimkan');
-        return redirect()->back()->with('Pesan gagal dikirimkan');
     }
 }

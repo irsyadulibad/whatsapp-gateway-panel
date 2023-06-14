@@ -1,24 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-md-5">
-        <div class="card">
-            <div class="card-body">
-                <h6 class="mb-3">Choose a session</h6>
-                <ul class="list-group">
-                    @forelse ($sess as $ses)
-                    <li class="list-group-item">
-                        <a href="{{ route('messages.show', $ses->id) }}">{{ $ses->id }}</a>
-                    </li>
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex mb-4 justify-content-end">
+            <a href="{{ route('messages.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus"></i>
+                <span>Add New</span>
+            </a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Message</th>
+                        <th>Target</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($messages as $message)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $message->text }}</td>
+                        <td>{{ $message->number }}</td>
+                    </tr>
                     @empty
-                    <li class="list-group-item text-center text-muted">
-                        <span>No session found</span><br>
-                        <a href="{{ route('sessions.create') }}">add session</a>
-                    </li>
                     @endforelse
-                </ul>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

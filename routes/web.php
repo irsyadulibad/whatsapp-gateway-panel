@@ -20,11 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('sessions', SessionController::class);
-Route::prefix('messages')
-    ->controller(MessageController::class)
-    ->name('messages.')
-    ->group(function () {
-        Route::get('{session}/send', 'compose')->name('compose');
-        Route::post('{session}/send', 'send')->name('send');
-    });
 Route::resource('messages', MessageController::class);

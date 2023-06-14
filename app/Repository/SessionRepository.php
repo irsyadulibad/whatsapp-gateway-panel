@@ -10,43 +10,21 @@ class SessionRepository
 
     public function __construct()
     {
-        $this->url = config('app.apiurl') . '/sessions/';
+        $this->url = config('app.apiurl');
     }
 
-    public function get()
+    public function authenticated()
     {
-        $res = Http::get($this->url);
+        $res = Http::get($this->url . '/checkauth');
 
-        if ($res->status() == 200) {
-            return $res->object();
-        }
-
-        return [];
+        if($res->successful()) return $res->object()->auth;
+        return false;
     }
 
-    public function add(String $name, bool $readIncoming = false)
+    public function qrCode()
     {
-        $res = Http::post($this->url . 'add', [
-            'sessionId' => $name,
-            'readIncomingMessages' => $readIncoming,
-        ]);
-
-        if ($res->status() == 200) {
-            return [
-                'status' => true,
-                'qr' => $res->object()->qr,
-            ];
-        }
-
-        return [
-            'status' => false,
-            'message' => $res->object()->error,
-        ];
-    }
-
-    public function delete(String $name)
-    {
-        $res = Http::delete($this->url . $name);
-        return $res->status() == 200;
+        $res = Http::get($this->url . '/qrcode');
+        if($res->successful()) return $res->object()->qr;
+        return null;
     }
 }

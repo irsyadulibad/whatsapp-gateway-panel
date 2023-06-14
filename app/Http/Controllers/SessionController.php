@@ -21,9 +21,9 @@ class SessionController extends Controller
     public function index()
     {
         return view('session.index', [
-            'title' => 'Sessions',
+            'title' => 'Session',
             'subt' => 'Device Session',
-            'sessions' => $this->repo->get(),
+            'authenticated' => $this->repo->authenticated(),
         ]);
     }
 
@@ -32,8 +32,12 @@ class SessionController extends Controller
      */
     public function create()
     {
+        if($this->repo->authenticated())
+            return redirect()->route('sessions.index');
+
         return view('session.create', [
-            'title' => 'Add Session'
+            'title' => 'Connect Session',
+            'qrCode' => $this->repo->qrCode(),
         ]);
     }
 
@@ -42,16 +46,7 @@ class SessionController extends Controller
      */
     public function store(SessionRequest $request)
     {
-        $data = $this->repo->add(
-            $request->name,
-            $request->exists('read')
-        );
 
-        if (!$data['status']) return to_route('sessions.index');
-
-        return view('session.qr', [
-            'qr' => $data['qr']
-        ]);
     }
 
     /**
@@ -83,7 +78,6 @@ class SessionController extends Controller
      */
     public function destroy(string $name)
     {
-        $this->repo->delete($name);
-        return back();
+
     }
 }

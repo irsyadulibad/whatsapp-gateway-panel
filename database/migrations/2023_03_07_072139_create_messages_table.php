@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('session', '255');
             $table->string('target', 15);
             $table->longText('text');
             $table->timestamps();
