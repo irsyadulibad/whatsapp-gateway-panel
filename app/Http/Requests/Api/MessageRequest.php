@@ -24,7 +24,6 @@ class MessageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session' => 'required|string',
             'target' => 'required|numeric',
             'text' => 'required',
         ];

@@ -23,7 +23,7 @@ class MessageRepository
     {
         $res = Http::post($this->url . '/message', [
             'phone' => $data['target'],
-            'message' => $data['message'],
+            'message' => $data['text'],
         ]);
 
         if($res->successful()) {

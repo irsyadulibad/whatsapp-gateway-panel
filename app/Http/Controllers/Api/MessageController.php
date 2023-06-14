@@ -31,7 +31,7 @@ class MessageController extends Controller
     public function store(MessageRequest $request)
     {
         $session = $request->session;
-        $send = (new MessageRepository($session))
+        $send = (new MessageRepository)
             ->send($request->validated());
 
         if ($send) {
@@ -39,7 +39,6 @@ class MessageController extends Controller
                 [
                     'target' => $request->target,
                     'text' => $send,
-                    'session' => $session,
                 ],
                 "Success send the message"
             );
